@@ -74,6 +74,102 @@ The analysis scripts are designed for **diagnostics analysis and figure generati
 - they may require local adjustment of file paths to simulation result directories,
 - they are intended to be used with simple commandline: `python [script_name]`.
 
+## System requirements
+
+### Baseline code
+
+The customized PIC source tree in `Smilei/src/` is based on the public Smilei `v5.1` source code.
+
+- Upstream baseline: [Smilei v5.1](https://github.com/SmileiPIC/Smilei/releases/tag/v5.1)
+- Upstream tag commit: [`438d43d8ab727d02dd8f4402c50393343e871b99`](https://github.com/SmileiPIC/Smilei/commit/438d43d8ab727d02dd8f4402c50393343e871b99)
+- Local modifications: FEL-oriented extensions for the Lorentz-boosted undulator setup, bunch initialization, and far-field radiation-diagnostic workflow used in this work.
+
+The full upstream Smilei package is not redistributed here. Users should first obtain and build the public Smilei v5.1 release following the official Smilei installation instructions, then replace the upstream `src/` directory by the customized `Smilei/src/` directory provided in this repository.
+
+### Software dependencies
+
+The code follows the Smilei v5.1 build system and therefore requires the standard Smilei dependencies, including a C++11 compiler, MPI, parallel HDF5, and Python 3. For post-processing, the analysis scripts require Python packages used by the Smilei `happi` interface and by the figure scripts, including `numpy`, `h5py`, and `matplotlib`.
+
+For the full and platform-specific dependency list, see the official [Smilei installation documentation]((https://smileipic.github.io/Smilei/Use/installation.html)).
+
+### Hardware requirements
+
+The analysis scripts can be executed on a standard desktop or laptop once the corresponding simulation output files are available.
+
+The full 3D PIC simulations reported in the manuscript are high-performance-computing simulations and are not intended to be reproduced on a normal desktop computer. The exact runtime depends on the machine, MPI/OpenMP configuration, and selected namelist.
+
+## Installation guide
+
+### 1. Build the upstream Smilei v5.1 code
+
+First, install and test the public Smilei v5.1 release using the official Smilei documentation. A typical CPU build on a recent Linux desktop or workstation takes approximately 5–20 minutes after dependencies are installed. Installation of MPI/HDF5 dependencies may take longer and is system-dependent.
+
+Example:
+
+```bash
+git clone https://github.com/SmileiPIC/Smilei.git Smilei_v5.1
+cd Smilei_v5.1
+git checkout v5.1
+make -j 4
+make happi
+```
+The command `make happi` installs the Smilei Python post-processing interface so that `import happi` works from Python. Check the corresponding page for [post-process](https://smileipic.github.io/Smilei/Use/post-processing.html), and also related [Happi installation section](https://smileipic.github.io/Smilei/Use/installation.html#installmodule). Additionally, Smilei’s documentation says compilation is done with `make`, and parallel compilation can be applied by providing the number of cores to the `make` command via `-j` parameter. 
+
+### 2. Replace the source tree by the customized PairBeamFEL source
+
+After confirming that the upstream Smilei v5.1 build works, replace the upstream `src/` directory with the customized source tree provided here:
+
+```bash
+cp -r /path/to/PairBeamFEL/Smilei/src /path/to/Smilei_v5.1/
+cd /path/to/Smilei_v5.1
+make clean
+make -j 4
+make happi
+```
+The resulting `smilei` executable is the customized executable used with the namelists in this repository.
+
+## Demo
+
+The lightweight demo consists of running the post-processing scripts on existing Smilei output directories. These scripts reproduce the manuscript-style figures from previously generated simulation data. Before running a script, edit the path variables (`simulation_results_paths`) near the beginning of the script so that they point to the local Smilei output directories.
+
+Example commands:
+
+```bash
+python Analysis_Scripts/draft_figures_UV.py
+python Analysis_Scripts/draft_figures_Xray.py
+python Analysis_Scripts/draft_figures_gamma.py
+python Analysis_Scripts/draft_figures_LSC.py
+```
+Expected runtime on a normal desktop or workstation is typically less than a few minutes per script, assuming the required Smilei output files are already available locally. At present, the repository provides the scripts and namelists but not the full Smilei output datasets because of file-size constraints. A reference dataset suitable for testing the analysis pipeline will be provided with the archival link.
+
+- `draft_figures_UV.py` → `Fig. 2`
+- `draft_figures_Xray.py` → `Fig. 3`
+- `draft_figures_gamma.py` → `Fig. 4`
+- `draft_figures_LSC.py` → `Fig. 5`
+
+## Instructions for use
+
+The complete workflow has three stages.
+
+- **Stage 1**: Produce a customized `smilei` executable
+  - build and test Smilei v5.1 by installing its public release and confirm that the default executable builds correctly (see `Installation Guide` section)
+  - replace the upstream Smilei src/ directory by the customized source tree supplied in this repository (see `Installation Guide` section)
+- **Stage 2**: Run a simulation namelist
+  - launch the Smilei simulation by passing one of the namelist files in `Namelist_Files/` for a given scenario to the `smilei` executable
+  - for production simulations, choose the MPI/OpenMP layout appropriate for the available HPC system --> example `sbatch job file` (in `Smilei/` subfolder) is also provided which has been used in HPC of the Max Planck Institute for Nuclear Physics via `SLURM Workload Manager`.
+    Example:
+```
+      mkdir run_UV_pancake_ep
+      cd run_UV_pancake_ep
+      cp /path/to/PairBeamFEL/Namelist_Files/namelist_UV_pancake_ep.py .
+      mpirun -n 64 /path/to/Smilei_v5.1/smilei namelist_UV_pancake_ep.py
+```
+- **Stage 3**: Analyze the output and generate figures
+  - edit the path variables in the corresponding analysis script so that they point to the correct output directories (see `Demo` section)
+  - execute the python script (see `Demo` section)
+
+
+
 ## Attribution
 **PairBeamFEL** is a scientific project. If you present and/or publish scientific results that benefit from it, we ask you to set a reference to show your support. At present, this can be achieved by simply adding
 
