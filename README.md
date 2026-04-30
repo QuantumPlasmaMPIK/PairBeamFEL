@@ -5,7 +5,9 @@ Simulation and analysis tools for pair-beam free-electron laser (FEL): 3D partic
 
 This repository provides the simulation inputs, customized PIC source components, and post-processing scripts used for the numerical study. It is organized into three main components:
 
-### 1. `Smilei/src/`
+### 1. `Smilei/`
+
+#### 1.1. `src/`
 This directory contains the **modified SMILEI source tree** used for the FEL simulations. It corresponds to a customized implementation of the [public PIC code](https://github.com/SmileiPIC/Smilei) in which the standard source has been extended to support the simulation workflow required for pair-beam FEL studies. In particular, the modified version is intended to handle:
 
 - **Lorentz-boosted undulator-field treatment** for efficient boosted-frame FEL modeling,
@@ -14,6 +16,12 @@ This directory contains the **modified SMILEI source tree** used for the FEL sim
 - coupling to the near-field / far-field diagnostic strategy used throughout the paper
 
 Only the relevant source subtree is included here, so this folder should be understood as the code-level component of the reproducibility package rather than as a standalone re-distribution of the full upstream [SMILEI]((https://github.com/SmileiPIC/Smilei)) project.
+
+#### 1.2. `MODIFICATIONS.md`
+This file briefly lists the summary of changes, so the differences between the customized and baseline (v5.1) Smilei source code.
+
+#### 1.3. `SLURM_run.sh`
+Example batch script for running a job with SLURM manager at high-performance cluster (HPC) in Max Planck Institute for Nuclear Physics. This file should not be considered as reference; it is just a demonstration to show how we use SLURM workload manager while running the Smilei executable with multiple tasks & cores efficiently.
 
 ### 2. `Analysis_Scripts/`
 This directory contains the **Python post-processing and figure-generation scripts**:
@@ -152,11 +160,11 @@ Expected runtime on a normal desktop or workstation is typically less than a few
 The complete workflow has three stages.
 
 - **Stage 1**: Produce a customized `smilei` executable
-  - build and test Smilei v5.1 by installing its public release and confirm that the default executable builds correctly (see `Installation Guide` section)
+  - build and test Smilei v5.1 by [installing its public release](https://smileipic.github.io/Smilei/Use/installation.html) and confirm that the default executable builds correctly (see `Installation Guide` section)
   - replace the upstream Smilei src/ directory by the customized source tree supplied in this repository (see `Installation Guide` section)
 - **Stage 2**: Run a simulation namelist
   - launch the Smilei simulation by passing one of the namelist files in `Namelist_Files/` for a given scenario to the `smilei` executable
-  - for production simulations, choose the MPI/OpenMP layout appropriate for the available HPC system --> example `sbatch job file` (in `Smilei/` subfolder) is also provided which has been used in HPC of the Max Planck Institute for Nuclear Physics via `SLURM Workload Manager`.
+  - for production simulations, choose the MPI/OpenMP layout appropriate for the available HPC system --> example sbatch job file in `Smilei/` subfolder (`SLURM_run.sh`) is also provided for demonstration which has been used in HPC of the Max Planck Institute for Nuclear Physics via `SLURM Workload Manager`. For your specific system requirements, also check the corresponding [Smilei run page](https://smileipic.github.io/Smilei/Use/run.html).
     Example:
 ```
       mkdir run_UV_pancake_ep
