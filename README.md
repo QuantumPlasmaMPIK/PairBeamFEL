@@ -3,12 +3,12 @@ Simulation and analysis tools for pair-beam free-electron laser (FEL): 3D partic
 
 ## Repository structure
 
-This repository provides the simulation inputs, customized PIC source components, and post-processing scripts used for the numerical study. It is organized into three main components:
+This repository provides the simulation inputs, customized PIC source components, and post-processing scripts used for the numerical study in [arXiv:2603.15407](https://doi.org/10.48550/arXiv.2603.15407). It is organized into three main folders:
 
 ### 1. `Smilei/`
 
 #### 1.1. `src/`
-This directory contains the **modified SMILEI source tree** used for the FEL simulations. It corresponds to a customized implementation of the [public PIC code](https://github.com/SmileiPIC/Smilei) in which the standard source has been extended to support the simulation workflow required for pair-beam FEL studies. In particular, the modified version is intended to handle:
+This directory contains the **modified SMILEI source code** used for the FEL simulations. It corresponds to a customized implementation of the [public PIC code](https://github.com/SmileiPIC/Smilei) in which the standard source has been extended to support the simulation workflow required for pair-beam FEL studies. In particular, the modified version is intended to handle:
 
 - **Lorentz-boosted undulator-field treatment** for efficient boosted-frame FEL modeling,
 - **custom bunch initialization** for electron-only and electron-positron beam configurations in bunch rest frame,
@@ -31,9 +31,9 @@ This directory contains the **Python post-processing and figure-generation scrip
 - `draft_figures_gamma.py`
 - `draft_figures_LSC.py`
 
-These scripts are intended for analysis of the simulation outputs corresponding to the [paper figures](https://arxiv.org/html/2603.15407v1) and include FEL-relevant diagnostics such as beam distributions, power evolution, field structure, and radiation observables. The scripts directly use the **SMILEI Python diagnostics interface (`happi`)** and are written for post-processing previously generated simulation data rather than for fully self-contained execution out of the box. In their current form, they also contain user-side path definitions to simulation result directories, which should be adapted manually before reuse.
+These scripts are intended for analysis of the simulation outputs corresponding to the [paper figures](https://doi.org/10.48550/arXiv.2603.15407) and include FEL-relevant diagnostics such as beam distributions, power evolution, field structure, and radiation observables. The scripts directly use the **SMILEI Python diagnostics interface (`happi`)** and are written for post-processing previously generated simulation data rather than for fully self-contained execution out of the box. In their current form, they also contain user-side path definitions to simulation result directories, which should be adapted manually before reuse.
 
-At the repository level, these analysis scripts correspond to the paper figure generation workflow for **Fig. 2 to Fig. 5**, respectively.
+At the repository level, these analysis scripts correspond to the paper figure generation workflow for **Fig. 2 to Fig. 5** of [arXiv:2603.15407](https://doi.org/10.48550/arXiv.2603.15407), respectively.
 
 ### 3. `Namelist_Files/`
 This directory contains the **input SMILEI namelist files** used to run the different simulation scenarios discussed in the paper:
@@ -64,7 +64,7 @@ The namelists are not generic placeholder inputs: they explicitly document a **L
 
 ## Scenario-to-figure mapping
 
-The repository content is organized to match the simulation campaign reported in the paper:
+The repository content is organized to match the simulation campaign reported in the [paper](https://doi.org/10.48550/arXiv.2603.15407):
 
 - **UV regime (regular- and pancake-shape bunches)** → corresponding to the UV comparison figure (`Fig. 2`),
 - **X-ray regime (high-current bunches)** → corresponding to the X-ray demonstration figure (`Fig. 3`),
@@ -73,7 +73,7 @@ The repository content is organized to match the simulation campaign reported in
 ## Notes on use
 
 ### Simulation code & SMILEI run
-The `Smilei/src/` directory contains the **modified version of the SMILEI source** used in this work. Users intending to reproduce or extend the simulations should treat it as a customized FEL-oriented SMILEI source tree as a code replacement. Build, runtime environment, and external dependencies should therefore be configured consistently with the corresponding SMILEI repo used by the authors, by following public [SMILEI installation page](https://smileipic.github.io/Smilei/Use/installation.html). Input namelist files under `Namelist_Files/` can be used to run simulations, and corresponding [SMILEI run page](https://smileipic.github.io/Smilei/Use/run.html) should be followed how to forward those input files to the executable binary for each above-mentioned scenario.
+The `Smilei/src/` directory contains the **modified version of the SMILEI source code** used in this work. Users intending to reproduce or extend the simulations presented in [arXiv:2603.15407](https://doi.org/10.48550/arXiv.2603.15407) should treat it as a customized FEL-oriented SMILEI source tree as a code replacement. Build, runtime environment, and external dependencies should therefore be configured following the corresponding SMILEI repo used by the authors (see the public [SMILEI installation page](https://smileipic.github.io/Smilei/Use/installation.html)). Input namelist files under `Namelist_Files/` can be used to run simulations, and corresponding [SMILEI run page](https://smileipic.github.io/Smilei/Use/run.html) should be followed how to forward those input files to the executable binary for each above-mentioned scenario.
 
 ### Post-processing
 The analysis scripts are designed for **diagnostics analysis and figure generation** from existing simulation outputs. In particular:
@@ -179,7 +179,11 @@ The complete workflow has three stages.
 
 
 ## Attribution
-**PairBeamFEL** is a scientific project. If you present and/or publish scientific results that benefit from it, we ask you to set a reference to show your support. At present, this can be achieved by simply adding
+**PairBeamFEL** is a scientific project. If you present and/or publish scientific results that benefit from it, we ask you to set a reference to show your support. At present, this can be achieved inquiring 
+
+- [CITATION.md](https://raw.githubusercontent.com/QuantumPlasmaMPIK/PairBeamFEL/refs/heads/main/CITATION.md)
+
+or by simply adding
 
 "Erciyes, Ç., Keitel, C. H., & Tamburini, M., arXiv preprint arXiv:2603.15407 (2026)"
 
