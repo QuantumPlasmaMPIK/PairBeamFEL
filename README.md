@@ -96,7 +96,7 @@ The full upstream Smilei package is not redistributed here. Users should first o
 
 ### Software dependencies
 
-The code follows the Smilei v5.1 build system and therefore requires the standard Smilei dependencies, including a C++11 compiler, MPI, parallel HDF5, and Python 3. For post-processing, the analysis scripts require Python packages used by the Smilei `happi` interface and by the figure scripts, including `numpy`, `h5py`, and `matplotlib`.
+The code follows the Smilei v5.1 build system and therefore requires the standard Smilei dependencies, including a C++11 compiler, MPI, parallel HDF5, and Python 3. For post-processing, the analysis scripts require Python packages used by the Smilei `happi` interface and by the figure scripts, including `numpy`, `h5py`, `scipy`, and `matplotlib`.
 
 For the full and platform-specific dependency list, see the official [Smilei installation documentation]((https://smileipic.github.io/Smilei/Use/installation.html)).
 
@@ -138,22 +138,7 @@ The resulting `smilei` executable is the customized executable used with the nam
 
 ## Demo
 
-The lightweight demo consists of running the post-processing scripts on existing Smilei output directories. These scripts reproduce the manuscript-style figures from previously generated simulation data. Before running a script, edit the path variables (`simulation_results_paths`) near the beginning of the script so that they point to the local Smilei output directories.
-
-Example commands:
-
-```bash
-python Analysis_Scripts/draft_figures_UV.py
-python Analysis_Scripts/draft_figures_Xray.py
-python Analysis_Scripts/draft_figures_gamma.py
-python Analysis_Scripts/draft_figures_LSC.py
-```
-Expected runtime on a normal desktop or workstation is typically less than a few minutes per script, assuming the required Smilei output files are already available locally. At present, the repository provides the scripts and namelists but not the full Smilei output datasets because of file-size constraints. A reference dataset suitable for testing the analysis pipeline will be provided with the archival link.
-
-- `draft_figures_UV.py` → `Fig. 2`
-- `draft_figures_Xray.py` → `Fig. 3`
-- `draft_figures_gamma.py` → `Fig. 4`
-- `draft_figures_LSC.py` → `Fig. 5`
+The lightweight demo corresponds to ...
 
 ## Instructions for use
 
@@ -173,9 +158,15 @@ The complete workflow has three stages.
       mpirun -n 64 /path/to/Smilei_v5.1/smilei namelist_UV_pancake_ep.py
 ```
 - **Stage 3**: Analyze the output and generate figures
-  - edit the path variables in the corresponding analysis script so that they point to the correct output directories (see `Demo` section)
-  - execute the python script (see `Demo` section)
-
+  - running the post-processing scripts on existing Smilei output directories to reproduce the manuscript-style figures from previously generated simulation data requires to load `happi` module. If `import happi` does not work in your case, then you should try to execute the `Diagnostics.py` script as explained [here](https://smileipic.github.io/Smilei/Use/installation.html#install-the-happi-module). You can do that by adjusting one of the path variables `diagnostics_script_local`, `diagnostics_script_mount`, or `diagnostics_script_HPC` (if exists) within these analysis scripts by simply setting it to the absolute path of your `Diagnostics.py`.
+  - before running the corresponding analysis script, edit the absolute path elements via variable `simulation_results_paths` (if exists) near the beginning of the script so that they point to the correct local Smilei output directory in your workspace.
+  - execute the corresponding analysis script simply via `python` command. Expected runtime on a normal desktop or workstation is typically less than a few minutes per script, assuming the required Smilei output files are already available locally. At present, the repository provides the scripts and namelists only but not the full Smilei output datasets due to the file-size constraints. A reference dataset suitable for testing the analysis pipeline will be provided with the archival link. With the purpose of generating such figures (from Fig. 2 to Fig. 5, respectively):
+```
+       python Analysis_Scripts/draft_figures_UV.py
+       python Analysis_Scripts/draft_figures_Xray.py
+       python Analysis_Scripts/draft_figures_gamma.py
+       python Analysis_Scripts/draft_figures_LSC.py
+```
 
 
 ## Attribution
