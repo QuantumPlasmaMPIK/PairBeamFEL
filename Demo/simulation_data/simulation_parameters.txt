@@ -1,0 +1,10 @@
+wr = 6.278839e+10
+undulator_period = 6.283185307179586
+FEL_radiation_wl = 0.0006147928958938237
+bunch gamma = 100.58729083494204
+reference_frame_velocity = 0.9999021526716407
+reference_frame_gamma = 71.48602357475733
+K = 1.4
+undulator_start_lab_frame = 81.9902085754038
+density = 1552135984739.85
+Bz = 0.49964311206281226
