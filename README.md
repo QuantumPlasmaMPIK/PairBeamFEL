@@ -3,7 +3,7 @@ Simulation and analysis tools for pair-beam free-electron laser (FEL): 3D partic
 
 ## Repository structure
 
-This repository provides the simulation inputs, customized PIC source components, and post-processing scripts used for the numerical study in [arXiv:2603.15407](https://doi.org/10.48550/arXiv.2603.15407). It is organized into three main folders:
+This repository provides the simulation inputs, customized PIC source components, and post-processing scripts used for the numerical study in [arXiv:2603.15407](https://doi.org/10.48550/arXiv.2603.15407). It is organized into four main folders:
 
 ### 1. `Smilei/`
 
@@ -61,6 +61,10 @@ These files correspond to the **X-ray scenarios**, including **two different cur
 These files correspond to the **gamma-regime proof-of-principle simulations** for the electron-only and pair-beam configurations.
 
 The namelists are not generic placeholder inputs: they explicitly document a **Lorentz-boosted SASE FEL setup**, including boosted-frame transformation logic, bunch initialization from lab-frame parameters, prescribed-field handling for the undulator, and external far-field radiation detector support.
+
+### 4. `Demo/`
+This directory contains a reduced infrared-regime demonstration case, including a Smilei namelist, a corresponding lightweight post-processing script, precomputed Smilei output data, and reference diagnostic results. The demo is intended as a numerical functionality test of the customized workflow — including the Lorentz-boosted-frame setup, internal undulator-field treatment, and complementary diagnostics — rather than as a physically meaningful FEL simulation.
+
 
 ## Scenario-to-figure mapping
 
