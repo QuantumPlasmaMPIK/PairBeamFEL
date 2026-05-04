@@ -136,10 +136,6 @@ make happi
 ```
 The resulting `smilei` executable is the customized executable used with the namelists in this repository.
 
-## Demo
-
-The lightweight demo corresponds to ...
-
 ## Instructions for use
 
 The complete workflow has three stages.
@@ -167,6 +163,72 @@ The complete workflow has three stages.
        python Analysis_Scripts/draft_figures_gamma.py
        python Analysis_Scripts/draft_figures_LSC.py
 ```
+
+
+## Demo
+
+The `Demo/` directory provides a lightweight end-to-end demonstration of the customized `PairBeamFEL` workflow. It is intended to let users test the main code components on a normal desktop or laptop, without running the full production-scale simulations reported in the paper.
+
+The demo is deliberately reduced in size. It should be understood as a **numerical functionality test**, not as a physically meaningful FEL configuration. In particular, the Infrared-regime parameters and reduced resolution are chosen to make the simulation and post-processing fast enough for local testing. The purpose is to demonstrate that the customized Smilei executable can
+
+* run a Lorentz-boosted-frame FEL-type setup,
+* use the internally implemented prescribed undulator field,
+* produce standard Smilei diagnostics,
+* produce the complementary radiation-diagnostic output used by the customized workflow,
+* and post-process the resulting data with the provided Python analysis script.
+
+The directory is organized as follows:
+
+* `Demo/namelist_demo.py` --> reduced Smilei namelist for the demonstration run.
+
+* `Demo/analysis_demo.py` --> Python post-processing script for analyzing the demo output.
+
+* `Demo/simulation_data/` --> precomputed Smilei output from the reduced demo simulation. This allows users to test the analysis step directly without rerunning the simulation.
+
+* `Demo/diagnostics/` --> example analysis results generated from the demo data.
+
+### Option 1: run the reduced demo simulation
+
+After building the customized Smilei executable as described in the installation section, the demo simulation can be launched by passing the demo namelist to the executable. For example:
+
+```
+cd /path/to/PairBeamFEL/Demo
+mkdir demo_run
+cd demo_run
+cp ../analysis_demo.py .
+mkdir simulation_data
+cd simulation_data
+cp ../../namelist_demo.py .
+mpirun -n 8 /path/to/custom_Smilei_v5.1/smilei namelist_demo.py
+```
+
+The expected runtime is approximately 10 minutes on a recent desktop or laptop using 8 CPU cores. The exact runtime depends on the compiler, MPI/OpenMP configuration, processor, and HDF5 filesystem performance.
+
+After the run, the Smilei output can be analyzed with the postprocessing script which will directly process the data within the `simulation_data` subfolder (as a hardcoded way) which should be at the same level with that script like the way it is provided in Demo/ folder.
+
+```
+cd ..
+python analysis_demo.py
+```
+
+If needed, edit the path variables `diagnostics_script_local`, `diagnostics_script_mount`, or `diagnostics_script_HPC` within the analysis script by simply setting it to the absolute path of your `Diagnostics.py` in case `import happi` does not work (as explained [here](https://smileipic.github.io/Smilei/Use/installation.html#install-the-happi-module)).
+
+### Option 2: analyze the precomputed demo data
+
+Users who only want to test the Python post-processing workflow can skip the simulation step and directly analyze the precomputed data distributed in
+`Demo/simulation_data/`. From the repository root, run
+```
+cd /path/to/PairBeamFEL/Demo
+mkdir demo_run
+cp -a simulation_data/ demo_run/
+cp analysis_demo.py demo_run/
+cd demo_run
+python analysis_demo.py
+```
+
+The expected runtime of the analysis step is typically less than a minute on a normal desktop or laptop.
+
+The expected output is a set of diagnostic plots for 2-d field images and far-field detector output corresponding to the reduced demo case. These results are provided also as a reference output in `Demo/diagnostics/`.
 
 
 ## Attribution
