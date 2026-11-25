@@ -29,14 +29,15 @@ This directory contains the **Python post-processing and figure-generation scrip
 - `draft_figures_UV.py`
 - `draft_figures_Xray.py`
 - `draft_figures_gamma.py`
-- `draft_figures_LSC.py`
+- `draft_figures_hardXray.py`
+
 
 These scripts are intended for analysis of the simulation outputs corresponding to the [paper figures](https://doi.org/10.48550/arXiv.2603.15407) and include FEL-relevant diagnostics such as beam distributions, power evolution, field structure, and radiation observables. The scripts directly use the **SMILEI Python diagnostics interface (`happi`)** and are written for post-processing previously generated simulation data rather than for fully self-contained execution out of the box. In their current form, they also contain user-side path definitions to simulation result directories, which should be adapted manually before reuse.
 
-At the repository level, these analysis scripts correspond to the paper figure generation workflow for **Fig. 2 to Fig. 5** of [arXiv:2603.15407](https://doi.org/10.48550/arXiv.2603.15407), respectively.
+At the repository level, these analysis scripts correspond to the paper figure generation workflow for **Fig. 1 to Fig. 4** of [arXiv:2603.15407](https://doi.org/10.48550/arXiv.2603.15407), respectively.
 
 ### 3. `Namelist_Files/`
-This directory contains the **input SMILEI namelist files** used to run the different simulation scenarios discussed in the paper:
+This directory contains the **input SMILEI namelist files** used to run the different simulation scenarios discussed in the main text of the manuscript:
 
 #### UV regime
 - `namelist_UV_ellipsoidal_e.py`
@@ -70,9 +71,10 @@ This directory contains a reduced infrared-regime demonstration case, including 
 
 The repository content is organized to match the simulation campaign reported in the [paper](https://doi.org/10.48550/arXiv.2603.15407):
 
-- **UV regime (regular- and pancake-shape bunches)** → corresponding to the UV comparison figure (`Fig. 2`),
-- **X-ray regime (high-current bunches)** → corresponding to the X-ray demonstration figure (`Fig. 3`),
-- **gamma regime** → corresponding to the multi-slice gamma-ray figure (`Fig. 4`),
+- **UV regime (regular- and pancake-shape bunches)** → corresponding to the UV comparison figure (`Fig. 1`),
+- **X-ray regime (high-current bunches)** → corresponding to the X-ray demonstration figure (`Fig. 2`),
+- **gamma regime** → corresponding to the multi-slice gamma-ray figure (`Fig. 3`),
+- **hard X-ray regime** → corresponding to the regime assessment with robustness control in the hard X-ray figure (`Fig. 4` in the End Matter),
 
 ## Notes on use
 
@@ -165,7 +167,7 @@ The complete workflow has three stages.
        python Analysis_Scripts/draft_figures_UV.py
        python Analysis_Scripts/draft_figures_Xray.py
        python Analysis_Scripts/draft_figures_gamma.py
-       python Analysis_Scripts/draft_figures_LSC.py
+       python Analysis_Scripts/draft_figures_hardXray.py
 ```
 
 
